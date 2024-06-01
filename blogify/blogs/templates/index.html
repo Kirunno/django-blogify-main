@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Moviepoisk</title>
+  {% load django_bootstrap5 %}
+  {% load static %}
+  {% bootstrap_css %}
+  <link rel="stylesheet" href="{% static 'styles.css' %}">
+  <style>
+    .profile_image {
+      width: 40px; /* Увеличиваем размер аватарки */
+      height: 40px;
+    }
+    .user-name {
+      font-size: 16px; /* Увеличиваем размер имени пользователя */
+      font-weight: bold;
+      color: #fff; /* Добавляем белый цвет имени пользователя */
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="height: 10vh">
+      <div class="container-fluid">
+        <h1 class="navbar-brand fs-2 fw-bold" href="#">Moviepoisk</h1>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'home_page' %}">Главная</a>
+            </li>
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'logout_page' %}">Выйти</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'login_page' %}">Войти</a>
+            </li>
+            {% endif %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'top_page' %}">Топ лучших</a>
+            </li>
+          </ul>
+          {% if user.is_authenticated %}
+          <div class="profile d-flex align-items-center">
+            <img class="profile_image rounded-circle" src="https://img.freepik.com/premium-vector/user-icon-human-person-symbol-social-profile-icon-avatar-login-sign-web-user-symbol-neumorphic-ui-ux-white-user-interface-web-button-neumorphism-vector-eps-10_399089-2757.jpg" alt="Profile Image">
+            <h4 class="ms-2 mb-0 user-name">{{ user.username }}</h4> <!-- Добавляем класс user-name -->
+          </div>
+          <form class="d-flex search_form ms-3" role="search">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="title" />
+            <div class="found_movies">
+              {% for movie in movies %}
+              <div class="movie_search p-2 border-bottom">
+                <img class="movie_search_image" src="{{ movie.image }}" alt="found movie">
+                <a href="{% url 'movies_detail' movie.id %}" class="movie_search_title d-block mt-2">{{ movie.title }}</a>
+              </div>
+              {% endfor %}
+            </div>
+          </form>
+          {% endif %}
+        </div>
+      </div>
+    </nav>
+  </header>
+  <main class="main">
+    <section class="bg-dark text-light p-4 min-vh-100">
+      {% block content %} {% endblock %}
+    </section>
+  </main>
+  {% bootstrap_javascript %}
+</body>
+</html>

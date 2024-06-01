@@ -1,0 +1,78 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div class="container py-5">
+  {% if user.is_authenticated %}
+  <div class="movies">
+    <div class="category mb-5">
+      <h2 class="fs-3 text-light fw-bold">Классика</h2>
+      <div class="movies_items d-flex flex-wrap gap-4 mt-3">
+        {% for movie in movies1 %}
+        <div class="movie card bg-dark text-light border-0 position-relative" style="width: 18rem;">
+          <span class="badge bg-success position-absolute top-0 start-0 m-2">{{ movie.rate }}</span>
+          <img src="{{ movie.image }}" class="card-img-top" alt="post's image" style="height: 250px; object-fit: cover;">
+          <div class="card-body">
+            <h5 class="card-title">{{ movie.title }}</h5>
+            <a href="{% url 'movies_detail' movie.id %}" class="btn btn-primary">Посмотреть</a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    
+    <div class="category mb-5">
+      <h2 class="fs-3 text-light fw-bold">Топ фильмы</h2>
+      <div class="movies_items d-flex flex-wrap gap-4 mt-3">
+        {% for movie in movies2 %}
+        <div class="movie card bg-dark text-light border-0 position-relative" style="width: 18rem;">
+          <span class="badge bg-success position-absolute top-0 start-0 m-2">{{ movie.rate }}</span>
+          <img src="{{ movie.image }}" class="card-img-top" alt="post's image" style="height: 250px; object-fit: cover;">
+          <div class="card-body">
+            <h5 class="card-title">{{ movie.title }}</h5>
+            <a href="{% url 'movies_detail' movie.id %}" class="btn btn-primary">Посмотреть</a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    
+    <div class="category mb-5">
+      <h2 class="fs-3 text-light fw-bold">Фильмы, которые могут вас заинтересовать</h2>
+      <div class="movies_items d-flex flex-wrap gap-4 mt-3">
+        {% for movie in movies3 %}
+        <div class="movie card bg-dark text-light border-0 position-relative" style="width: 18rem;">
+          <span class="badge bg-success position-absolute top-0 start-0 m-2">{{ movie.rate }}</span>
+          <img src="{{ movie.image }}" class="card-img-top" alt="post's image" style="height: 250px; object-fit: cover;">
+          <div class="card-body">
+            <h5 class="card-title">{{ movie.title }}</h5>
+            <a href="{% url 'movies_detail' movie.id %}" class="btn btn-primary">Посмотреть</a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    
+    <div class="category mb-5">
+      <h2 class="fs-3 text-light fw-bold">Недавно вышедшие</h2>
+      <div class="movies_items d-flex flex-wrap gap-4 mt-3">
+        {% for movie in movies4 %}
+        <div class="movie card bg-dark text-light border-0 position-relative" style="width: 18rem;">
+          <span class="badge bg-success position-absolute top-0 start-0 m-2">{{ movie.rate }}</span>
+          <img src="{{ movie.image }}" class="card-img-top" alt="post's image" style="height: 250px; object-fit: cover;">
+          <div class="card-body">
+            <h5 class="card-title">{{ movie.title }}</h5>
+            <a href="{% url 'movies_detail' movie.id %}" class="btn btn-primary">Посмотреть</a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% else %}
+  <div class="need_auth d-flex flex-column justify-content-center align-items-center min-vh-100">
+    <h1 class="text-center mb-4">Чтобы просматривать контент, нужно авторизоваться</h1>
+    <a href="{% url 'login_page' %}" class="btn btn-primary">Войти</a>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}
